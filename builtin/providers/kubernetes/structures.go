@@ -64,3 +64,27 @@ func flattenMetadata(meta api.ObjectMeta) []map[string]interface{} {
 
 	return []map[string]interface{}{m}
 }
+
+func ptrToString(s string) *string {
+	return &s
+}
+
+func ptrToInt(i int) *int {
+	return &i
+}
+
+func ptrToBool(b bool) *bool {
+	return &b
+}
+
+func ptrToInt32(i int32) *int32 {
+	return &i
+}
+
+func sliceOfString(slice []interface{}) []string {
+	result := make([]string, len(slice), len(slice))
+	for i, s := range slice {
+		result[i] = s.(string)
+	}
+	return result
+}
