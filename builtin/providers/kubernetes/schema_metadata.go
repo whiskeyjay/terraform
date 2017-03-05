@@ -71,3 +71,24 @@ func metadataSchema(objectName string) *schema.Schema {
 		},
 	}
 }
+
+func namespacedMetadataSchema(objectName string) *schema.Schema {
+	fields := metadataFields(objectName)
+	fields["namespace"] = &schema.Schema{
+		Type:        schema.TypeString,
+		Description: fmt.Sprintf("Namespace defines the space within which name of the %s must be unique.", objectName),
+		Optional:    true,
+		ForceNew:    true,
+		Default:     "default",
+	}
+
+	return &schema.Schema{
+		Type:        schema.TypeList,
+		Description: fmt.Sprintf("Standard %s's metadata. More info: https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#metadata", objectName),
+		Required:    true,
+		MaxItems:    1,
+		Elem: &schema.Resource{
+			Schema: fields,
+		},
+	}
+}
